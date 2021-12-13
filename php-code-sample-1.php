@@ -1,5 +1,5 @@
 
-
+<?php 
 use App\Jobs\ScheduleOrSendMail;
 use App\Mail\Email;
 use App\Models\Contact;
