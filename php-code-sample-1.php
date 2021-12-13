@@ -35,9 +35,9 @@ public function store(Request $request)
             }
             $msg->contacts()->syncWithoutDetaching($ContactIds); // behind the scene, this code does  insert into `contacts_messages` (`contact_id`, `messages_id`) values (5, 1)
 
-// check if value for the request payload "when"  is "not now", if it is , then we loop through the emails from the request body, also get their names then we pass  the ...
+// check if value for the request payload "when"  is "now", if it is , then we loop through the emails from the request body, also get their names then we pass  the ...
 // details to the dispacth job function that will send the mail immediately following a json response of "success" (mail was successfully sent"
-            if ($request->when == 'not now') {
+            if ($request->when == 'now') {
             {
                 foreach ($request->email as $key => $mails) {
 
@@ -48,7 +48,7 @@ public function store(Request $request)
 
                 return response()->json(['success' => 'Hurray..Mail was successfully sent']);
             } else {
-// here, for the else, if the  request payload "when" value  is not "not now",  we set a schedule date for it, set the date in the time format we want and save it to the db , then tell the user
+// here, for the else, if the  request payload "when" value  is not "now",  we set a schedule date for it, set the date in the time format we want and save it to the db , then tell the user
  // via a json response that the message will be set on that paticurlar date entered in the frontend 
                 $scheduleDate =  date('Y-m-d H:i', strtotime($request->scheduleTime));
                 $msg->schedule_time = $scheduleDate;
